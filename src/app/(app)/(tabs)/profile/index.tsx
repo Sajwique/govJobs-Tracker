@@ -18,6 +18,7 @@ import { client } from "@/lib/sanity/client";
 import { getWorkoutsQuery } from "../notification";
 import { formatDuration } from "@/lib/utils";
 import { FontAwesome, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
+import SupportMe from "@/components/SupportMe";
 
 const ProfilePage = () => {
   const { signOut } = useAuth();
@@ -45,11 +46,9 @@ const ProfilePage = () => {
   };
 
   const handleSendFeedback = () => {
-    const phone = "YOUR_WHATSAPP_NUMBER"; // With country code
-    const message = "Hello! I have feedback about your app:";
-    const url = `whatsapp://send?phone=${phone}&text=${encodeURIComponent(
-      message
-    )}`;
+    const phone = "8851505898"; // With country code
+    // const message = "Hello! I have feedback about your app:";
+    const url = `whatsapp://send?phone=${phone}&text=${phone}}`;
 
     Linking.openURL(url).catch(() => {
       alert("WhatsApp is not installed");
@@ -162,48 +161,6 @@ const ProfilePage = () => {
 
         {/* SignOut Button */}
         <View className="px-6 mb-8">
-          <View className="my-3">
-            <TouchableOpacity
-              className="bg-white p-5 rounded-xl shadow-sm flex-row justify-between items-center"
-              onPress={handleSupportPress}
-            >
-              <View className="flex-row items-center">
-                <FontAwesome5
-                  name="hand-holding-heart"
-                  size={24}
-                  color="#6D28D9"
-                />
-                <Text className="ml-4 text-lg font-medium">Support Us</Text>
-              </View>
-              <MaterialIcons
-                name={showSupport ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-                size={28}
-                color="#6B7280"
-              />
-            </TouchableOpacity>
-
-            {showSupport && (
-              <View className="bg-white mt-2 p-5 rounded-xl items-center">
-                <Text className="text-lg text-center mb-4 text-purple-700 font-medium">
-                  Thank you for your support! ❤️
-                </Text>
-                <Image
-                  source={require("../../../../../assets/images/icon.png")}
-                  className="w-48 h-48 mb-4"
-                />
-                <View className="flex-row items-center bg-purple-100 p-3 rounded-lg">
-                  <FontAwesome5 name="copy" size={18} color="#6D28D9" />
-                  <Text className="ml-2 text-lg font-mono font-bold">
-                    your.upi@id
-                  </Text>
-                </View>
-                <Text className="mt-3 text-gray-600 text-center">
-                  Scan the QR or copy UPI ID to support our work
-                </Text>
-              </View>
-            )}
-          </View>
-
           {/* Rate App Section */}
           <TouchableOpacity
             className="bg-white p-5 rounded-xl shadow-sm mb-6 mt-2 flex-row items-center"
@@ -258,19 +215,44 @@ const ProfilePage = () => {
             </View>
           </View>
 
-          <TouchableOpacity
-            onPress={handleSignOut}
-            className="bg-red-600 rounded-2xl p-4 shadow-sm mt-5"
-            activeOpacity={0.8}
-          >
-            <View className="flex-row items-center justify-center">
-              <Ionicons name="log-out-outline" size={20} color={"white"} />
-              <Text className="text-white font-semibold text-lg ml-2">
-                Sign Out
-              </Text>
-            </View>
-          </TouchableOpacity>
+          <View className="bg-white p-5 rounded-xl shadow-sm mt-3">
+            <Text className="text-red-600 font-semibold text-md">
+              Disclaimer
+            </Text>
+            <Text className="text-sm  text-left pt-3">
+              This App is a private app that is not associated, endorsed or
+              affiliated with any government institution, agency or department.
+              The content available on this app is for informational purposes
+              only and has been compiled from various reliable sources. Although
+              we endeavor to keep the information accurate and up to date, we
+              make no representations or warranties of any kind, express or
+              implied, about the completeness, accuracy, reliability,
+              suitability or availability of the information
+            </Text>
+          </View>
+
+          <View className="bg-yellow-400 border-[1px] border-gray-50 rounded-xl mt-3 py-3 px-3">
+            <Text className="text-lg font-bold text-black">
+              This is Beta Verison of the App
+            </Text>
+          </View>
         </View>
+
+        <View className="mt-2 mb-4">
+          <SupportMe />
+        </View>
+        <TouchableOpacity
+          onPress={handleSignOut}
+          className="bg-red-600 rounded-2xl p-4 shadow-sm mt-5"
+          activeOpacity={0.8}
+        >
+          <View className="flex-row items-center justify-center">
+            <Ionicons name="log-out-outline" size={20} color={"white"} />
+            <Text className="text-white font-semibold text-lg ml-2">
+              Sign Out
+            </Text>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

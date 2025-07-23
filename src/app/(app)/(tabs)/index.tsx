@@ -14,11 +14,8 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Entypo, Ionicons } from "@expo/vector-icons";
 import { client } from "@/lib/sanity/client";
-import { formatDate, formatDuration } from "@/lib/utils";
-import ExerciseCard from "@/components/ExerciseCard";
-
+import ExerciseCard from "@/components/JobCard";
 import { Job } from "gov-sanity/sanity.types";
 import { defineQuery } from "groq";
 

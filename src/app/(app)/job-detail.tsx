@@ -2,7 +2,6 @@ import {
   View,
   Text,
   SafeAreaView,
-  StatusBar,
   TouchableOpacity,
   ScrollView,
   Image,
@@ -11,7 +10,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { client, urlFor } from "@/lib/sanity/client";
 import { defineQuery } from "groq";
 import Markdown from "react-native-markdown-display";
@@ -71,11 +70,9 @@ const ExerciseDetails = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white ">
-      <StatusBar barStyle="light-content" backgroundColor={"#000"} />
-
+    <SafeAreaView className="flex-1 bg-white py-14">
       {/* Header with close button */}
-      <View className="absolute top-2 right-0 z-10 px-4">
+      <View className="absolute top-2 right-0 z-10 px-4 mt-12">
         <TouchableOpacity
           onPress={() => router.back()}
           className="w-10 h-10 rounded-full items-center justify-center backdrop-blur-sm bg-black/20"
@@ -84,7 +81,7 @@ const ExerciseDetails = () => {
         </TouchableOpacity>
       </View>
 
-      <View className="h-60 bg-white relative mt-5">
+      <View className="h-40 bg-white relative mt-5">
         {job?.image ? (
           <Image
             source={{ uri: urlFor(job.image?.asset?._ref).url() }}

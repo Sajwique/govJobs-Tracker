@@ -19,6 +19,21 @@ export default defineType({
         },
       ],
     }),
+
+    defineField({
+      name: 'sallbus_img',
+      title: 'Sallbus Image',
+      description: 'An image showing the proper form or demonstration of the exercise',
+      type: 'image',
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alt Text',
+          description: 'Description of the exercise image for accessibility and SEO purposes',
+        },
+      ],
+    }),
     defineField({
       name: 'title',
       title: 'Job Title',
@@ -199,6 +214,107 @@ export default defineType({
             defineField({name: 'label', type: 'string', title: 'Link Label (e.g. Apply Online)'}),
             defineField({name: 'url', type: 'url', title: 'URL'}),
           ],
+        }),
+      ],
+    }),
+
+    defineField({
+      name: 'postSalary',
+      title: 'Post-wise Salary Details',
+      type: 'array',
+      description: 'Salary structure for each post',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'post',
+              type: 'string',
+              title: 'Post Name',
+              description: 'e.g. GD Constable, Clerk, Teacher',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'category',
+              type: 'string',
+              title: 'Pay Category',
+              description: 'e.g. Group-C, Level-4',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'salary_range',
+              type: 'string',
+              title: 'Salary Range',
+              description: 'e.g. "21,000 - 69,000"',
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'post',
+              subtitle: 'salary_range',
+            },
+          },
+        }),
+      ],
+    }),
+
+    defineField({
+      name: 'postSyllabus',
+      title: 'Post-wise Syllabus',
+      type: 'array',
+      description: 'Syllabus organized by post',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'post',
+              type: 'string',
+              title: 'Post Name',
+              description: 'Must match post names in vacancy details',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'topics',
+              title: 'Syllabus Topics',
+              type: 'array',
+              of: [
+                defineArrayMember({
+                  type: 'object',
+                  fields: [
+                    defineField({
+                      name: 'mainTopic',
+                      type: 'string',
+                      title: 'Main Topic',
+                      validation: (Rule) => Rule.required(),
+                    }),
+                    defineField({
+                      name: 'chapters',
+                      type: 'array',
+                      title: 'Chapters/Sub-topics',
+                      of: [{type: 'string'}],
+                      validation: (Rule) => Rule.required(),
+                    }),
+                  ],
+                  preview: {
+                    select: {
+                      title: 'mainTopic',
+                      subtitle: 'chapters',
+                    },
+                  },
+                }),
+              ],
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'post',
+              subtitleLength: 'topics.length',
+              subtitle: 'syllabus for: {{title}}',
+            },
+          },
         }),
       ],
     }),

@@ -2,7 +2,6 @@ import {
   FlatList,
   RefreshControl,
   SafeAreaView,
-  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
@@ -11,14 +10,13 @@ import {
 import React, { useEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { defineQuery } from "groq";
 import { client } from "@/lib/sanity/client";
-import ExerciseCard from "@/components/ExerciseCard";
-import { Job } from "@/lib/sanity/sanity.types";
 import Entypo from "@expo/vector-icons/Entypo";
+import { jobQuery } from "@/lib/utils";
+import JobCard from "@/components/JobCard";
+import { Job } from "@/lib/sanity/sanity.types";
 
 //Define the query outside the components for  proper type generations
-export const jobQuery = defineQuery(`*[_type == "job"]`);
 
 const exercises = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -112,7 +110,7 @@ const exercises = () => {
           </View>
         }
         renderItem={({ item }) => (
-          <ExerciseCard
+          <JobCard
             item={item}
             onPress={() => router.push(`/job-detail?id=${item._id}`)}
           />

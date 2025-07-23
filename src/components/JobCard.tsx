@@ -10,7 +10,7 @@ interface ExerciseCardProps {
   showChevron?: boolean;
 }
 
-const ExerciseCard = ({
+const JobCard = ({
   item,
   onPress,
   showChevron,
@@ -77,4 +77,4 @@ const ExerciseCard = ({
   );
 };
 
-export default ExerciseCard;
+export default JobCard;
