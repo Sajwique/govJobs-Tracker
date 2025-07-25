@@ -17,9 +17,15 @@ import {
 import { client } from "@/lib/sanity/client";
 import ExerciseCard from "@/components/JobCard";
 import { defineQuery } from "groq";
-import { Job } from "@/lib/sanity/sanity.types";
+import { Job, MainBanner } from "@/lib/sanity/sanity.types";
 import Slider from "@/components/Slider";
-import { sliderData } from "@/lib/utils";
+import {
+  activeJobQuery,
+  mainBannerQuery,
+  sliderData,
+  upcommingJobQuery,
+} from "@/lib/utils";
+import { UpcommingJobCard } from "@/components/UpcommingJobs";
 
 const data2 = [
   {
@@ -36,24 +42,30 @@ const data2 = [
   },
 ];
 
-export const activeJobQuery = defineQuery(
-  `*[_type == "job" && isActive == true]`
-);
-
 export default function HomePage() {
   const { user } = useUser();
   const router = useRouter();
 
   const [activeJobs, setActiveJobs] = useState<Job[]>([]);
+  const [mainBanner, setMainBanner] = useState<MainBanner[]>([]);
+  const [upcommingJobs, setUpcommingJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
   const fetchWorkouts = async () => {
-    if (!user?.id) return;
-
     try {
       const allActiveJobs = await client.fetch(activeJobQuery);
+      const upcommingJobs = await client.fetch(upcommingJobQuery);
+      const mainBanner = await client.fetch(mainBannerQuery);
+
+      console.log("upcommingJobs :", upcommingJobs.length);
       setActiveJobs(allActiveJobs);
+      setUpcommingJobs(upcommingJobs);
+      const bannerData = mainBanner[0].slides.map((item) => ({
+        image: item.image.asset._ref,
+        id: Math.random(),
+      }));
+      setMainBanner(bannerData);
     } catch (error) {
       console.error("Error fetching workouts:", error);
     } finally {
@@ -63,7 +75,7 @@ export default function HomePage() {
 
   useEffect(() => {
     fetchWorkouts();
-  }, [user?.id]);
+  }, []);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -123,16 +135,19 @@ export default function HomePage() {
                   />
                 }
               >
-                {/* Header */}
-                <View className="px-6 pt-8">
+                {/* Welcom Box */}
+                <View className="px-6 pt-8 mt-2">
                   <Text className="text-lg text-gray-600">Welcome back,</Text>
                   <Text className="text-3xl font-bold text-gray-900">
                     {user?.firstName || "Warrior"}! 💪
                   </Text>
                 </View>
+
+                {/* Slider */}
                 <View className="mx-2 my-2 text-cente">
-                  <Slider data={sliderData} />
+                  <Slider data={mainBanner} />
                 </View>
+
                 {/* Active Jobs */}
                 <View className="py-2 px-3 bg-gray-200 my-3">
                   <Text className="font-semibold text-green-400">
@@ -168,6 +183,45 @@ export default function HomePage() {
                       />
                     ))}
                 </ScrollView>
+
+                {/* Upcomming Jobs Card */}
+                <View className="py-2 px-3 bg-gray-300 my-5">
+                  <Text className="font-extrabold text-lg pt-3 text-[#1F2937]">
+                    Upcomming Goverment Jobs
+                  </Text>
+
+                  <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{
+                      paddingVertical: 10,
+                      flexDirection: "row",
+                      gap: 4,
+                    }}
+                    refreshControl={
+                      <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                        colors={["#3B82F6"]}
+                        tintColor={"#3B82F6"}
+                        title="Pull to refresh exercise"
+                        titleColor={"#6B7280"}
+                      />
+                    }
+                  >
+                    {upcommingJobs &&
+                      upcommingJobs.map((job) => (
+                        <UpcommingJobCard
+                          key={job._id}
+                          isHorizontal={true}
+                          item={job}
+                          onPress={() =>
+                            router.push(`/job-detail?id=${job._id}`)
+                          }
+                        />
+                      ))}
+                  </ScrollView>
+                </View>
               </ScrollView>
             </>
           }

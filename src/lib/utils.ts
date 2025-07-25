@@ -61,6 +61,22 @@ export const resultQuery = defineQuery(`*[_type == "result"]`);
 
 export const jobQuery = defineQuery(`*[_type == "job"]`);
 
+export const mainBannerQuery = defineQuery(
+  `*[_type == "mainBanner" && isActive == true]{
+  slides,
+  isActive,
+  _id
+}`
+);
+
+export const activeJobQuery = defineQuery(
+  `*[_type == "job" && isActive == true]`
+);
+
+export const upcommingJobQuery = defineQuery(
+  `*[_type == "job" && isUpcomming == true]`
+);
+
 export const supportData = {
   main_title: "Support Our Journey",
   title: "Beta Version Access",

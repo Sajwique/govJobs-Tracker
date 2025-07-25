@@ -24,7 +24,8 @@
           },
           "imageWidth": 200
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "name": "govJobs-Tracker",
     "slug": "goverment-Jobs-Tracker",
@@ -37,7 +38,9 @@
         "projectId": "f1e3dd6d-24c0-4d5d-be69-cec8e201fe75"
       }
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "package": "com.pankajsajwan.govermentJobsTracker"
     }

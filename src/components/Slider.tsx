@@ -1,3 +1,4 @@
+import { urlFor } from "@/lib/sanity/client";
 import React, { useEffect, useRef, useState } from "react";
 import {
   FlatList,
@@ -54,7 +55,7 @@ export default function Slider({ data }) {
             <View className="w-full rounded-xl overflow-hidden bg-white shadow">
               {item.image && (
                 <Image
-                  source={{ uri: item.image }}
+                  source={{ uri: urlFor(item.image).url() }}
                   className="flex-1 h-20 w-full justify-center items-center"
                   resizeMode="cover"
                 />
