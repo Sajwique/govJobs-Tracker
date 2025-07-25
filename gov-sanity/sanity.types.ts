@@ -31,7 +31,7 @@ export type Result = {
   cutoffMarks?: string
   meritListInfo?: string
   buttons?: Array<{
-    label?: 'result' | 'notification' | 'cutoff' | 'meritList' | 'scorecard'
+    label?: string
     url?: string
     _key: string
   }>
@@ -228,6 +228,7 @@ export type Job = {
     _key: string
   }>
   isActive?: boolean
+  isUpcomming?: boolean
 }
 
 export type SanityImagePaletteSwatch = {

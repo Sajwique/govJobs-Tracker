@@ -340,6 +340,13 @@ export default defineType({
       type: 'boolean',
       initialValue: true,
     }),
+
+    defineField({
+      name: 'isUpcomming',
+      title: 'Is Upcomming',
+      type: 'boolean',
+      initialValue: true,
+    }),
   ],
   preview: {
     select: {

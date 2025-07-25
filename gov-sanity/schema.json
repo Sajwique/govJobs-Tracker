@@ -109,29 +109,7 @@
               "label": {
                 "type": "objectAttribute",
                 "value": {
-                  "type": "union",
-                  "of": [
-                    {
-                      "type": "string",
-                      "value": "result"
-                    },
-                    {
-                      "type": "string",
-                      "value": "notification"
-                    },
-                    {
-                      "type": "string",
-                      "value": "cutoff"
-                    },
-                    {
-                      "type": "string",
-                      "value": "meritList"
-                    },
-                    {
-                      "type": "string",
-                      "value": "scorecard"
-                    }
-                  ]
+                  "type": "string"
                 },
                 "optional": true
               },
@@ -1436,6 +1414,13 @@
         "optional": true
       },
       "isActive": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "boolean"
+        },
+        "optional": true
+      },
+      "isUpcomming": {
         "type": "objectAttribute",
         "value": {
           "type": "boolean"
