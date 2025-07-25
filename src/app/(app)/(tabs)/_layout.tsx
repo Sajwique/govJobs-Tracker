@@ -52,9 +52,7 @@ const Layout = () => {
           tabBarIcon: ({ color, size }) => (
             <Image
               source={{
-                uri: user.imageUrl
-                  ? user?.externalAccounts[0].imageUrl
-                  : user.imageUrl,
+                uri: user.imageUrl ?? user?.externalAccounts[0].imageUrl,
               }}
               className="rounded-full"
               style={{ width: 28, height: 28, borderRadius: 100 }}

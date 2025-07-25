@@ -6,6 +6,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  ScrollView,
+  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
@@ -61,16 +63,17 @@ export default function Page() {
 
   return (
     <SafeAreaView className="flex-1">
+      <StatusBar barStyle="light-content" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
       >
-        <View className="flex-1  px-6">
+        <ScrollView className="flex-1 px-6">
           {/* Header Sections */}
 
-          <View className="flex-1 justify-center mt-5">
+          <View className="flex-1 justify-center">
             {/* Loog Branding */}
-            <View className="items-center mb-8">
+            <View className="items-center mt-5 mb-8">
               <View className="w-20 h-20 items-center justify-center rounded-2xl  bg-gradient-to-br from-blue-600 to-purple-600">
                 <Image
                   source={{
@@ -141,7 +144,7 @@ export default function Page() {
             <TouchableOpacity
               onPress={onSignInPress}
               disabled={isLoading}
-              className={`rounded-xl py-4 shadow-sm mb-4 ${
+              className={`rounded-xl py-4 shadow-sm mb-1 ${
                 isLoading ? "bg-gray-400" : "bg-blue-400"
               }`}
               activeOpacity={0.8}
@@ -190,7 +193,7 @@ export default function Page() {
               </Text>
             </View>
           </View>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

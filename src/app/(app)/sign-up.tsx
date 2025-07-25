@@ -5,6 +5,8 @@ import {
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
+  ScrollView,
+  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
@@ -13,6 +15,7 @@ import {
 import { useSignUp } from "@clerk/clerk-expo";
 import { Link, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import GoogleSignIn from "@/components/GoogleSignIn";
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -34,7 +37,6 @@ export default function SignUpScreen() {
     }
 
     setIsLoading(true);
-    console.log(emailAddress, password);
 
     // Start sign-up process using email and password provided
     try {
@@ -45,14 +47,11 @@ export default function SignUpScreen() {
 
       // Send user an email with verification code
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-
       // Set 'pendingVerification' to true to display second form
       // and capture OTP code
       setPendingVerification(true);
     } catch (err) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
+      Alert.alert("Error", err.message);
     } finally {
       setIsLoading(false);
     }
@@ -192,16 +191,17 @@ export default function SignUpScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
+      <StatusBar barStyle="light-content" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         className="flex-1"
       >
-        <View className="flex-1 px-6">
+        <ScrollView className="flex-1 px-6">
           {/* Main */}
 
           <View className="flex-1 justify-center">
             {/* Branding/Logo */}
-            <View className="items-center mb-8">
+            <View className="items-center mt-5 mb-8">
               <View className="w-20 h-20 items-center justify-center rounded-2xl  bg-gradient-to-br from-blue-600 to-purple-600">
                 <Image
                   source={{
@@ -219,7 +219,7 @@ export default function SignUpScreen() {
             </View>
 
             {/* SignIn Form */}
-            <View className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
+            <View className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-1">
               <Text className="text-2xl font-bold text-gray-900 mb-6 text-center">
                 Create an Account
               </Text>
@@ -302,6 +302,16 @@ export default function SignUpScreen() {
               </Text>
             </View>
 
+            {/* Divider */}
+            <View className="flex-row items-center my-4">
+              <View className="flex-1 h-px bg-gray-200" />
+              <Text className="px-4 text-gray-500 text-sm"> or</Text>
+              <View className="flex-1 h-px bg-gray-200" />
+            </View>
+
+            {/* Google SignIn Buttons */}
+            <GoogleSignIn />
+
             {/* Sign IN Links */}
 
             <View className="flex-row justify-center items-center mt-4">
@@ -324,7 +334,7 @@ export default function SignUpScreen() {
               </Text>
             </View>
           </View>
-        </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

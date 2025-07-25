@@ -10,13 +10,12 @@ export default defineType({
       title: 'Related Job Post',
       type: 'reference',
       to: [{type: 'job'}],
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
-      description: 'e.g., SSC GD Constable 2023 Final Result Declared',
+      description: 'e.g., SSC GD Constable Final Result Declared',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -55,37 +54,11 @@ export default defineType({
         defineArrayMember({
           type: 'object',
           fields: [
-            defineField({
-              name: 'label',
-              type: 'string',
-              title: 'Button Text',
-              options: {
-                list: [
-                  {title: 'Download Result', value: 'result'},
-                  {title: 'Official Notification', value: 'notification'},
-                  {title: 'Cut-off Marks', value: 'cutoff'},
-                  {title: 'Merit List', value: 'meritList'},
-                  {title: 'Scorecard', value: 'scorecard'},
-                ],
-              },
-              validation: (Rule) => Rule.required(),
-            }),
-            defineField({
-              name: 'url',
-              type: 'url',
-              title: 'Link URL',
-              validation: (Rule) => Rule.required(),
-            }),
+            defineField({name: 'label', type: 'string', title: 'Link Label (e.g. Apply Online)'}),
+            defineField({name: 'url', type: 'url', title: 'URL'}),
           ],
-          preview: {
-            select: {
-              title: 'label',
-              subtitle: 'url',
-            },
-          },
         }),
       ],
-      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: 'nextSteps',

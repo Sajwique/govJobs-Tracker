@@ -10,13 +10,12 @@ export default defineType({
       title: 'Related Job Post',
       type: 'reference',
       to: [{type: 'job'}],
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
-      description: 'e.g., SSC GD Constable 2023 Admit Card Released',
+      description: 'e.g., SSC GD Constable Admit Card Released',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -76,13 +75,11 @@ export default defineType({
                   {title: 'Candidate Login', value: 'login'},
                 ],
               },
-              validation: (Rule) => Rule.required(),
             }),
             defineField({
               name: 'url',
               type: 'url',
               title: 'Link URL',
-              validation: (Rule) => Rule.required(),
             }),
           ],
           preview: {
@@ -93,7 +90,6 @@ export default defineType({
           },
         }),
       ],
-      validation: (Rule) => Rule.required().min(1),
     }),
     defineField({
       name: 'status',

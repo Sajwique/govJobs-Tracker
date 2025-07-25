@@ -7,6 +7,7 @@ import {
   Image,
   Linking,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -33,7 +34,8 @@ const ExerciseDetails = () => {
         const jobData = await client.fetch(singleJobQuery, { id });
         setJob(jobData);
       } catch (error) {
-        console.log("error :", error);
+        // console.log("error :", error);
+        Alert.alert("Error", error.message);
       } finally {
         setLoading(false);
       }
@@ -70,9 +72,9 @@ const ExerciseDetails = () => {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white py-14">
+    <SafeAreaView className="flex-1 bg-white">
       {/* Header with close button */}
-      <View className="absolute top-2 right-0 z-10 px-4 mt-12">
+      <View className="absolute top-2 right-0 z-10 px-4">
         <TouchableOpacity
           onPress={() => router.back()}
           className="w-10 h-10 rounded-full items-center justify-center backdrop-blur-sm bg-black/20"
@@ -81,7 +83,7 @@ const ExerciseDetails = () => {
         </TouchableOpacity>
       </View>
 
-      <View className="h-40 bg-white relative mt-5">
+      <View className="h-40 bg-white relative my-5">
         {job?.image ? (
           <Image
             source={{ uri: urlFor(job.image?.asset?._ref).url() }}
@@ -90,7 +92,7 @@ const ExerciseDetails = () => {
           />
         ) : (
           <View className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 items-center justify-center">
-            <Ionicons name="fitness" size={80} color={"white"} />
+            <Ionicons name="document-lock" size={80} color={"white"} />
           </View>
         )}
 

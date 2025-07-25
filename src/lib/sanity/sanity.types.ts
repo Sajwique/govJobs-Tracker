@@ -13,6 +13,120 @@
  */
 
 // Source: schema.json
+export type Result = {
+  _id: string;
+  _type: "result";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  job?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "job";
+  };
+  title?: string;
+  description?: string;
+  resultDate?: string;
+  cutoffMarks?: string;
+  meritListInfo?: string;
+  buttons?: Array<{
+    label?: "result" | "notification" | "cutoff" | "meritList" | "scorecard";
+    url?: string;
+    _key: string;
+  }>;
+  nextSteps?: Array<string>;
+  status?: "declared" | "provisional" | "final" | "withheld";
+};
+
+export type AdmitCard = {
+  _id: string;
+  _type: "admitCard";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  job?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "job";
+  };
+  title?: string;
+  description?: string;
+  releaseDate?: string;
+  downloadWindow?: string;
+  instructions?: Array<string>;
+  requiredDocuments?: Array<string>;
+  buttons?: Array<{
+    label?:
+      | "admitCard"
+      | "officialWebsite"
+      | "examCenter"
+      | "helpdesk"
+      | "login";
+    url?: string;
+    _key: string;
+  }>;
+  status?: "released" | "comingSoon" | "delayed";
+};
+
+export type AnnouncementBanner = {
+  _id: string;
+  _type: "announcementBanner";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+  content?: string;
+  ctaLink?: string;
+  isActive?: boolean;
+  startDate?: string;
+  endDate?: string;
+};
+
+export type MainBanner = {
+  _id: string;
+  _type: "mainBanner";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slides?: Array<{
+    image?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    link?: string;
+    caption?: string;
+    _key: string;
+  }>;
+  isActive?: boolean;
+  startDate?: string;
+  endDate?: string;
+};
+
 export type Job = {
   _id: string;
   _type: "job";
@@ -32,7 +146,21 @@ export type Job = {
     alt?: string;
     _type: "image";
   };
+  sallbus_img?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
   title?: string;
+  description?: string;
   slug?: Slug;
   publishedAt?: string;
   vacancyTotal?: number;
@@ -82,6 +210,21 @@ export type Job = {
   officialLinks?: Array<{
     label?: string;
     url?: string;
+    _key: string;
+  }>;
+  postSalary?: Array<{
+    post?: string;
+    category?: string;
+    salary_range?: string;
+    _key: string;
+  }>;
+  postSyllabus?: Array<{
+    post?: string;
+    topics?: Array<{
+      mainTopic?: string;
+      chapters?: Array<string>;
+      _key: string;
+    }>;
     _key: string;
   }>;
   faqs?: Array<{
@@ -211,6 +354,10 @@ export type SanityAssetSourceData = {
 };
 
 export type AllSanitySchemaTypes =
+  | Result
+  | AdmitCard
+  | AnnouncementBanner
+  | MainBanner
   | Job
   | SanityImagePaletteSwatch
   | SanityImagePalette

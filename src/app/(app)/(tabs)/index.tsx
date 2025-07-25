@@ -1,5 +1,5 @@
 import { useUser } from "@clerk/clerk-expo";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -16,8 +16,25 @@ import {
 } from "react-native";
 import { client } from "@/lib/sanity/client";
 import ExerciseCard from "@/components/JobCard";
-import { Job } from "gov-sanity/sanity.types";
 import { defineQuery } from "groq";
+import { Job } from "@/lib/sanity/sanity.types";
+import Slider from "@/components/Slider";
+import { sliderData } from "@/lib/utils";
+
+const data2 = [
+  {
+    id: "3",
+    title: "Note : This app is not link any goverment sites",
+  },
+  {
+    id: "4",
+    title: "Please also read offical notification",
+  },
+  {
+    id: "4",
+    title: "send your feedback to us",
+  },
+];
 
 export const activeJobQuery = defineQuery(
   `*[_type == "job" && isActive == true]`
@@ -81,7 +98,8 @@ export default function HomePage() {
     );
   }
   return (
-    <SafeAreaView className=" flex-1 flex-row bg-gray-50 pt-14">
+    <SafeAreaView className=" flex-1 flex-row bg-gray-50">
+      <StatusBar barStyle="light-content" />
       <View>
         <FlatList
           data={[]}
@@ -106,13 +124,21 @@ export default function HomePage() {
                 }
               >
                 {/* Header */}
-                <View className="px-6 pt-8 pb-6">
+                <View className="px-6 pt-8">
                   <Text className="text-lg text-gray-600">Welcome back,</Text>
                   <Text className="text-3xl font-bold text-gray-900">
-                    {user?.firstName || "Athlete"}! 💪
+                    {user?.firstName || "Warrior"}! 💪
                   </Text>
                 </View>
+                <View className="mx-2 my-2 text-cente">
+                  <Slider data={sliderData} />
+                </View>
                 {/* Active Jobs */}
+                <View className="py-2 px-3 bg-gray-200 my-3">
+                  <Text className="font-semibold text-green-400">
+                    Currenting Active Goverment Jobs
+                  </Text>
+                </View>
                 <ScrollView
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
@@ -138,35 +164,11 @@ export default function HomePage() {
                         key={job._id}
                         isHorizontal={true}
                         item={job}
-                        onPress={() =>
-                          router.push(`/exercise-detail?id=${job._id}`)
-                        }
+                        onPress={() => router.push(`/job-detail?id=${job._id}`)}
                       />
                     ))}
                 </ScrollView>
               </ScrollView>
-              <View className="mx-6 my-2 bg-blue-50 rounded-2xl p-4 border border-blue-100">
-                <View className="flex-row justify-between">
-                  <View className="flex-1 pr-2">
-                    <Text className="text-lg font-bold text-gray-900">
-                      Featured Positions
-                    </Text>
-                    <Text className="text-sm text-gray-600 mt-1">
-                      High-priority openings with upcoming deadlines
-                    </Text>
-                    <TouchableOpacity
-                      className="mt-3 bg-blue-600 py-2 px-4 rounded-lg self-start"
-                      onPress={() => router.push("/featured")}
-                    >
-                      <Text className="text-white font-medium">View All</Text>
-                    </TouchableOpacity>
-                  </View>
-                  <Image
-                    //  source={require("@/assets/images/government-building.png")}
-                    className="w-24 h-24"
-                  />
-                </View>
-              </View>
             </>
           }
           ListFooterComponent={

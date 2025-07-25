@@ -1,7 +1,9 @@
 import {
+  Alert,
   FlatList,
   RefreshControl,
   SafeAreaView,
+  StatusBar,
   Text,
   TextInput,
   TouchableOpacity,
@@ -31,7 +33,8 @@ const exercises = () => {
       setJobs(jobs);
       setfilterJobs(jobs);
     } catch (e) {
-      console.log("Error Fetching exercise :", e);
+      // console.log("Error Fetching exercise :", e);
+      Alert.alert("Error", e.message);
     }
   };
 
@@ -52,7 +55,8 @@ const exercises = () => {
     setfilterJobs(filtered);
   }, [searchQuery, jobs]);
   return (
-    <SafeAreaView className="flex-1 bg-gray-50 pt-14">
+    <SafeAreaView className="flex-1 bg-gray-50">
+      <StatusBar barStyle="light-content" />
       {/* Header */}
       <View className="px-6 py-4 border-b border-gray-200">
         <Text className="text-2xl font-bold text-gray-900">Jobs Library</Text>

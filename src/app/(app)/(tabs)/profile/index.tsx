@@ -23,32 +23,23 @@ import SupportMe from "@/components/SupportMe";
 const ProfilePage = () => {
   const { signOut } = useAuth();
   const { user } = useUser();
-
   const [workouts, setWorkouts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const [showSupport, setShowSupport] = useState(false);
   const socialLinks = {
     instagram: "YOUR_INSTAGRAM_URL",
     twitter: "YOUR_TWITTER_URL",
     linkedin: "YOUR_LINKEDIN_URL",
   };
 
-  const handleSupportPress = () => {
-    setShowSupport(!showSupport);
-  };
-
   const handleRateApp = () => {
-    // Replace with your app store URL
     Linking.openURL(
       "https://play.google.com/store/apps/details?id=com.yourapp"
     );
   };
 
   const handleSendFeedback = () => {
-    const phone = "8851505898"; // With country code
-    // const message = "Hello! I have feedback about your app:";
-    const url = `whatsapp://send?phone=${phone}&text=${phone}}`;
+    const phone = "+918851505898";
+    const url = `whatsapp://send?phone=${phone}&text=${""}}`;
 
     Linking.openURL(url).catch(() => {
       alert("WhatsApp is not installed");
@@ -79,16 +70,6 @@ const ProfilePage = () => {
   useEffect(() => {
     fetchWorkouts();
   }, [user?.id]);
-
-  //Calculate state
-  const totalWorkouts = workouts.length;
-  const totalDurations = workouts.reduce(
-    (sum, workout) => sum + (workout.duration || 0),
-    0
-  );
-
-  const averageDuration =
-    totalWorkouts > 0 ? Math.round(totalDurations / totalWorkouts) : 0;
 
   // Calculate days since joining (using createAt from clerk)
   const joiningDate = user?.createdAt ? new Date(user?.createdAt) : new Date();
@@ -121,7 +102,7 @@ const ProfilePage = () => {
     ]);
   };
   return (
-    <SafeAreaView className="flex flex-1 pt-12">
+    <SafeAreaView className="flex flex-1">
       <ScrollView className="flex-1">
         {/* Header */}
         <View className="px-6 pt-8 pd-6">
@@ -148,7 +129,7 @@ const ProfilePage = () => {
                 <Text className="text-xl font-semibold text-gray-900">
                   {user?.firstName && user?.lastName
                     ? `${user.firstName} ${user.lastName}`
-                    : user?.firstName || "User"}
+                    : user?.firstName || "Warrior 💪"}
                 </Text>
                 <Text className="text-gray-600 text-sm">
                   {user?.emailAddresses?.[0]?.emailAddress}
@@ -231,28 +212,30 @@ const ProfilePage = () => {
             </Text>
           </View>
 
-          <View className="bg-yellow-400 border-[1px] border-gray-50 rounded-xl mt-3 py-3 px-3">
+          <View className="bg-yellow-400 border-[1px] border-gray-50 rounded-xl mt-6 py-3 px-3">
             <Text className="text-lg font-bold text-black">
               This is Beta Verison of the App
             </Text>
           </View>
         </View>
 
-        <View className="mt-2 mb-4">
+        <View className="px-2">
           <SupportMe />
         </View>
-        <TouchableOpacity
-          onPress={handleSignOut}
-          className="bg-red-600 rounded-2xl p-4 shadow-sm mt-5"
-          activeOpacity={0.8}
-        >
-          <View className="flex-row items-center justify-center">
-            <Ionicons name="log-out-outline" size={20} color={"white"} />
-            <Text className="text-white font-semibold text-lg ml-2">
-              Sign Out
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <View className="mt-3 px-6 mb-8">
+          <TouchableOpacity
+            onPress={handleSignOut}
+            className="bg-red-600 rounded-2xl p-4 shadow-sm mt-5"
+            activeOpacity={0.8}
+          >
+            <View className="flex-row items-center justify-center">
+              <Ionicons name="log-out-outline" size={20} color={"white"} />
+              <Text className="text-white font-semibold text-lg ml-2">
+                Sign Out
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

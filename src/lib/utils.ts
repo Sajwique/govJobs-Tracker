@@ -1,5 +1,3 @@
-import { AdmitCard, Result } from "gov-sanity/sanity.types";
-import { client } from "./sanity/client";
 import { defineQuery } from "groq";
 
 export function formatDuration(seconds: number) {
@@ -57,21 +55,9 @@ export const formatTime = (dateString?: string) => {
   });
 };
 
-export const adimtCardQuery =
-  defineQuery(`*[_type == "admitCard"] | order(releaseDate desc) {
-    _id,
-    title,
-    releaseDate,
-    buttons
-  }`);
+export const adimtCardQuery = defineQuery(`*[_type == "admitCard"]`);
 
-export const resultQuery =
-  defineQuery(`*[_type == "result"] | order(resultDate desc) {
-    _id,
-    title,
-    resultDate,
-    buttons
-  }`);
+export const resultQuery = defineQuery(`*[_type == "result"]`);
 
 export const jobQuery = defineQuery(`*[_type == "job"]`);
 
@@ -82,7 +68,29 @@ export const supportData = {
     "You're using our early-access app! Help us improve by sharing your feedback or feature requests.",
   help: "We need 10,000 downloads to become sustainable. As students ourselves, we understand budget constraints - even small contributions make a huge difference in keeping this app free.",
   payment_list: {
-    upi_scanner: "https://example.com/qr-code.png", // Replace with actual QR URL
-    upi_id: "yourupi@ybl",
+    upi_scanner:
+      "https://4o9e8g1e7a.ufs.sh/f/pzDgHaSuOztfF1tQKx75KXJTyS18GvPozabufI4VhCl2eMYO", // Replace with actual QR URL
+    upi_id: "7302348626@ybl",
   },
 };
+
+export const sliderData = [
+  {
+    id: "1",
+    // title: "Slide 1",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc9APxkj0xClmrU3PpMZglHQkx446nQPG6lA&s",
+  },
+  {
+    id: "2",
+    // title: "Slide 2",
+    image:
+      "https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/14235/production/_100058428_mediaitem100058424.jpg",
+  },
+  {
+    id: "3",
+    // title: "Slide 3",
+    image:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVNN58XFDLxdqtwwWRSE924NjtuSryXFGxjg&s",
+  },
+];

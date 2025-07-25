@@ -18,11 +18,20 @@ const JobCard = ({
 }: ExerciseCardProps) => {
   return (
     <TouchableOpacity
-      className={`bg-white rounded-2xl mb-4 shadow-sm border border-gray-100 ${
+      className={`relative bg-white rounded-2xl mb-4 shadow-sm border border-gray-100 ${
         isHorizontal && "w-[300px]"
       }`}
       onPress={onPress}
     >
+      {isHorizontal
+        ? ""
+        : item.isActive && (
+            <View className="flex items-center justify-center bg-green-500 rounded-full absolute -top-2 right-0 px-2">
+              <Text className="text-center font-semibold text-white text-sm">
+                {item.isActive ? "Live" : ""}
+              </Text>
+            </View>
+          )}
       <View className="flex-row p-6">
         <View className="w-20 h-20 bg-white rounded-xl mr-4 overflow-hidden">
           {item.image ? (
@@ -72,6 +81,16 @@ const JobCard = ({
             )}
           </View>
         </View>
+
+        {isHorizontal
+          ? item.isActive && (
+              <View className="absolute flex items-center justify-center bg-green-500 rounded-full  -bottom-2 right-0 px-2">
+                <Text className="text-center font-semibold text-white text-sm">
+                  {item.isActive ? "Live" : ""}
+                </Text>
+              </View>
+            )
+          : ""}
       </View>
     </TouchableOpacity>
   );

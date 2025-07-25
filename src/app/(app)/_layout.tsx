@@ -4,10 +4,7 @@ import { useAuth } from "@clerk/clerk-expo";
 import { ActivityIndicator, Text, View } from "react-native";
 
 const Layout = () => {
-  const { isSignedIn, userId, isLoaded, sessionId, getToken } = useAuth();
-
-  console.log("isSignedIn :", isSignedIn);
-  console.log("isLoaded :", isLoaded);
+  const { isSignedIn, isLoaded, getToken } = useAuth();
   if (!isLoaded) {
     return (
       <View className="flex-1 items-center justify-center">

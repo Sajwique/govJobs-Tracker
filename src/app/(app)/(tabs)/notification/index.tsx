@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { defineQuery } from "groq";
 import { client } from "@/lib/sanity/client";
-import { adimtCardQuery, supportData } from "@/lib/utils";
+import { adimtCardQuery, resultQuery, supportData } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import JobCardsSection from "@/components/JobCardsSection";
 import SupportMe from "@/components/SupportMe";
+import { StatusBar } from "react-native";
 
 export const getWorkoutsQuery =
   defineQuery(`*[_type == 'workout' && UserId == $UserId] | order(date desc){
@@ -42,7 +43,8 @@ export const getWorkoutsQuery =
     }`);
 
 export default function NotificationPage() {
-  const [workout, setWorkouts] = useState([]);
+  const [admitCard, setAdmitCard] = useState([]);
+  const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showPayment, setShowPayment] = useState(false);
 
@@ -50,15 +52,15 @@ export default function NotificationPage() {
 
   const { user } = useUser();
   const { refresh } = useLocalSearchParams();
-  const router = useRouter();
 
   const fetchWorkouts = async () => {
     if (!user?.id) return;
 
     try {
-      const results = await client.fetch(adimtCardQuery);
-      console.log("results: ", results);
-      setWorkouts(results);
+      const admitCard = await client.fetch(adimtCardQuery);
+      const result = await client.fetch(resultQuery);
+      setAdmitCard(admitCard);
+      setResult(result);
     } catch (error) {
       console.error("Error fetching workouts:", error);
     } finally {
@@ -74,7 +76,6 @@ export default function NotificationPage() {
   useEffect(() => {
     if (refresh == "true") {
       fetchWorkouts();
-      // router.replace("/(app)/(tabs)/notification");
     }
   }, [refresh]);
 
@@ -107,9 +108,10 @@ export default function NotificationPage() {
     );
   }
   return (
-    <SafeAreaView className=" flex-1 bg-gray-50 pt-14">
+    <SafeAreaView className=" flex-1 bg-gray-50">
+      <StatusBar barStyle="light-content" />
       {/* Header */}
-      <ScrollView
+      {/* <ScrollView
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -118,16 +120,19 @@ export default function NotificationPage() {
             tintColor="#3B82F6"
           />
         }
-      >
-        <View className="px-6 py-4 bg-white border-b border-gray-200">
-          <Text className="text-2xl font-bold text-gray-900">
-            Notification History
-          </Text>
-        </View>
+      > */}
+      {/* <View className="px-6 py-4 bg-white border-b border-gray-200">
+        <Text className="text-2xl font-bold text-gray-900">
+          Notification History
+        </Text>
+      </View> */}
 
-        <SupportMe />
-        <JobCardsSection admitCards={[]} results={[]} loading={loading} />
-      </ScrollView>
+      <JobCardsSection
+        admitCards={admitCard}
+        results={result}
+        loading={loading}
+      />
+      {/* </ScrollView> */}
     </SafeAreaView>
   );
 }
